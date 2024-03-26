@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
+
 return function (App $app) {
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
         // CORS Pre-Flight OPTIONS Request Handler
@@ -16,7 +17,11 @@ return function (App $app) {
     });
 
     $app->get('/', function (Request $request, Response $response) {
-        $response->getBody()->write('Hello world!');
+        $JWTClass = new \App\Libraries\JWTClass();
+
+        $token = $JWTClass->encode(['id' => 1, 'name' => 'Hasan Kaya']);
+
+        $response->getBody()->write($token);
         return $response;
     });
 

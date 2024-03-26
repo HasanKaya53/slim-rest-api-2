@@ -24,6 +24,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
+        "firebase/php-jwt": "^6.10",
         "monolog/monolog": "^2.8",
         "php-di/php-di": "^6.4",
         "slim/psr7": "^1.5",
@@ -46,7 +47,10 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "App\\Controller\\": "app/Controller/",
+            "App\\Libraries\\": "app/Libraries/",
+            "Model\\": "app/Model/"
         }
     },
     "autoload-dev": {
