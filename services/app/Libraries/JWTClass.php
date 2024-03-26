@@ -27,7 +27,7 @@ class JWTClass
 
     public function encode($data)
     {
-        $this->payload['data'] = $data;
+        $this->payload['user'] = $data;
         return JWT::encode($this->payload, $this->key, 'HS256');
 
     }
