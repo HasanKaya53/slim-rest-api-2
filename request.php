@@ -33,21 +33,18 @@ if($_POST['type'] == 'list'){
     curl_close($ch);
     $response = json_decode($response, true);
 
-if(isset($response['error']) ){
-        echo "<tr><td colspan='3'>Veri bulunamadı</td></tr>";
+
+if(isset($response['error']) || sizeof($response) == 0 ){
+        echo json_encode([]);
         exit;
 }
 
     $table = "";
-    foreach ($response as $item){
-        $table .= "<tr>";
-        $table.= "<td>".$item['plate']."</td>";
-        $table.= "<td>".$item['price']." TL</td>";
-        $table.= "<td>".date("d-m-Y H:i:s",strtotime($item['transition_date']))."</td>";
-        $table.= "</tr>";
-    }
 
-    echo $table;
+
+echo json_encode($response);
+
+
 
 }
 

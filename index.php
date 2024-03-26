@@ -92,11 +92,11 @@ if ( isset($_POST['name']) && isset($_POST['pass'])) {
 
         <div class="form-group">
             <label for="name">Kullanıcı Adı</label>
-            <input type="text" class="form-control" name="name" id="name">
+            <input type="text" class="form-control" name="name" id="name" value="admin">
         </div>
         <div class="form-group">
             <label for="dob">Şifre</label>
-            <input type="text" class="form-control" name="pass" id="pass">
+            <input type="password" class="form-control" name="pass" id="pass" value="123456">
         </div>
 
 

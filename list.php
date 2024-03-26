@@ -34,6 +34,13 @@ if(!isset($_SESSION['token'])){
     <a href="logout.php" class="btn btn-danger" style="float:right">Çıkış Yap</a>
 
 
+    <!--search.. -->
+    <div class="input-group mb-3 mt-3">
+        <input type="text" class="form-control" placeholder="Plaka ara" aria-label="Recipient's username" aria-describedby="button-addon2" id="plakaAraInput">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Ara</button>
+    </div>
+
+
     <table class="table">
         <thead>
         <tr>
@@ -93,6 +100,8 @@ if(!isset($_SESSION['token'])){
 <script>
     $(document).ready(function () {
 
+
+        let plakaJson = [];
         function list(){
             $.ajax({
                 url: 'request.php',
@@ -102,7 +111,24 @@ if(!isset($_SESSION['token'])){
                 },
                 success: function (response) {
                     console.log(response);
-                    $('#listBody').html(response);
+
+                    let data = JSON.parse(response);
+                    plakaJson = data;
+
+
+                    $('#listBody').html('');
+
+                    data.forEach(function (item){
+                        let tr = "<tr>";
+                        tr += "<td>"+item.plate+"</td>";
+                        tr += "<td>"+item.price+" TL</td>";
+                        tr += "<td>"+item.transition_date+"</td>";
+                        tr += "</tr>";
+
+                        $('#listBody').append(tr);
+                    });
+
+
                 },
                 error: function (error) {
                     console.log(error);
@@ -110,7 +136,35 @@ if(!isset($_SESSION['token'])){
             });
         }
 
+
+        function filterList(){
+            let plaka = $('#plakaAraInput').val();
+            //tamamı büyük..
+            plaka = plaka.toUpperCase();
+            //boşlukları temizle..
+            plaka = plaka.replace(/\s/g, '');
+
+            let filtered = plakaJson.filter(function (item){
+                return item.plate.includes(plaka);
+            });
+
+            $('#listBody').html('');
+
+            filtered.forEach(function (item){
+                let tr = "<tr>";
+                tr += "<td>"+item.plate+"</td>";
+                tr += "<td>"+item.price+" TL</td>";
+                tr += "<td>"+item.transition_date+"</td>";
+                tr += "</tr>";
+
+                $('#listBody').append(tr);
+            });
+        }
+
         list();
+
+
+
 
 
         $(document).on('click','#save',function(e){
@@ -147,10 +201,17 @@ if(!isset($_SESSION['token'])){
         });
 
 
+        $(document).on('change','#plakaAraInput',function(e){
+            filterList();
+        });
 
-
-
+        $(document).on('click','#button-addon2',function(e){
+            filterList();
+        });
     });
+
+
+
 </script>
 
 
