@@ -16,12 +16,14 @@ class JWTClass
     {
         $this->key = 'secretKey';
         $iat = time();
-        $nbf = $iat + 40;
+        $nbf = $iat + 3600;
         $this->payload = [
             'iss' => 'https://hasankaya.info',
             'aud' => 'https://hasankaya.info',
-            'iat' => $iat,
-            'nbf' => $nbf
+            //'exp' => $iat + 3600, // 1 saat geçerli olacak,
+            //1 dakika geçerli olacak
+            'exp' => $iat + 60,
+            'iat' => $iat
         ];
     }
 

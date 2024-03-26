@@ -50,7 +50,8 @@
             "App\\": "src/",
             "App\\Controller\\": "app/Controller/",
             "App\\Libraries\\": "app/Libraries/",
-            "App\\Model\\": "app/Model/"
+            "App\\Model\\": "app/Model/",
+            "App\\Middleware\\": "app/Middleware/"
         }
     },
     "autoload-dev": {

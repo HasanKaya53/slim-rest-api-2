@@ -7,6 +7,15 @@ class TransitionModel extends BaseController
 
     protected $tableName = "transition";
 
+
+    public function listAllTransition()
+    {
+        $stmt = $this->db->prepare("SELECT plate,price,transition_date FROM $this->tableName INNER JOIN plate ON transition.plate_id = plate.id ORDER BY transition_date DESC");
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+    }
+
     public function createNewTransition($data){
         $stmt = $this->db->prepare("INSERT INTO $this->tableName (plate_id, price, transition_date) VALUES (:plate_id,:price, :date)");
         $stmt->execute($data);

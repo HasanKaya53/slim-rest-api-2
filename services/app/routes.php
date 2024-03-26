@@ -26,8 +26,8 @@ return function (App $app) {
         $group->post('/transition/new', \App\Controller\TransitionController::class . ':createNewTransition');
 
 
-        $group->get('/transition/list', \App\Controller\TransitionController::class . ':listTransition');
-    });
+        $group->post('/transition/list', \App\Controller\TransitionController::class . ':listTransition');
+    })->add(\App\Middleware\Auth::class);
 
 
 };

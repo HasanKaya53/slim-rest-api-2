@@ -11,6 +11,8 @@ class SetupDatabaseCommand
     public static function handle()
     {
 
+        date_default_timezone_set('Europe/Istanbul');
+
         echo "Veritabanı oluşturulmaya başlanıyor...\n";
 
         // Kullanıcıdan gerekli bilgileri al

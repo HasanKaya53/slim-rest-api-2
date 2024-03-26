@@ -133,9 +133,15 @@ class TransitionController
     }
 
 
-    public function listTransition()
+    public function listTransition($request, $response, $args)
     {
+        $transitionModel = new TransitionModel();
+        $transitions = $transitionModel->listAllTransition();
 
+        $response->getBody()->write(json_encode($transitions));
+
+
+        return $response;
     }
 
 }
