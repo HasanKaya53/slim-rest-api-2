@@ -26,6 +26,22 @@ class SetupDatabaseCommand
             $pdo->exec("CREATE DATABASE IF NOT EXISTS `$database`");
 
             //table create...
+            $pdo->exec("CREATE TABLE IF NOT EXISTS `$database`.`users` (
+                `id` INT NOT NULL AUTO_INCREMENT,
+                `username` VARCHAR(255) NOT NULL,
+                `password` VARCHAR(255) NOT NULL,
+    `is_read` boolean default 0,
+    `is_write` boolean default 1,
+                `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+                PRIMARY KEY (`id`)
+            )");
+
+            //insert user ..
+            $password = md5('.?*2ıfmwo3ıumg'.md5('services_user_1').md5(time().time()+19));
+
+
+            $stmt = $pdo->prepare("INSERT INTO `$database`.`users` (`services_user`, `services_user_1`) VALUES (:username, :password)");
 
 
 

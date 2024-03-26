@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
+use App\Libraries\JWTClass;
 
 
 return function (App $app) {
@@ -17,7 +18,7 @@ return function (App $app) {
     });
 
     $app->get('/', function (Request $request, Response $response) {
-        $JWTClass = new \App\Libraries\JWTClass();
+        $JWTClass = new JWTClass();
 
         $token = $JWTClass->encode(['id' => 1, 'name' => 'Hasan Kaya']);
 
@@ -25,8 +26,5 @@ return function (App $app) {
         return $response;
     });
 
-    $app->group('/users', function (Group $group) {
-        $group->get('', ListUsersAction::class);
-        $group->get('/{id}', ViewUserAction::class);
-    });
+
 };
