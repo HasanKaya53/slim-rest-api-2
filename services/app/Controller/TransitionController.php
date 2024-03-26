@@ -8,11 +8,11 @@ use App\Model\TransitionModel;
 class TransitionController
 {
 
-    function isValidLicensePlate($plateNumber) {
+       function isValidLicensePlate($plateNumber) {
 
-        $pattern = '/^\d{2}\s?[A-Z]{1,3}\s?\d{4}$/';
+        $pattern = '/^(0[1-9]|[1-7][0-9]|8[01])(([A-Z])(\d{4,5})|([A-Z]{2})(\d{3,4})|([A-Z]{3})(\d{2,3}))$/';
 
-        if (preg_match($pattern, $plateNumber)) {
+        if (preg_match($pattern, str_replace(' ', '', strtoupper($plateNumber)) )) {
             return true; // Geçerli bir plaka numarası
         } else {
             return false; // Geçersiz plaka numarası
