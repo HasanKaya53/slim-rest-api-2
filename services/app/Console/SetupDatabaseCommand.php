@@ -15,10 +15,12 @@ class SetupDatabaseCommand
 
         // Kullanıcıdan gerekli bilgileri al
         $host = readline('Veritabanı Hostu (varsayılan: localhost): ') ?: 'localhost';
-        $database = readline('Veritabanı Adı (varsayılan: transition): ') ?: 'transition';
+        $database = readline('Veritabanı Adı (varsayılan: slim_example_2): ') ?: 'slim_example_2';
         $username = readline('Veritabanı Kullanıcı Adı (varsayılan: root): ') ?: 'root';
-        $password = readline('Veritabanı Kullanıcı Şifre: (varsayılan: boş): ') ?: '';
+        $password = readline('Veritabanı Kullanıcı Şifre: (varsayılan: boş): ') ?: 'rootroot';
         $port = readline('Veritabanı Portu (varsayılan: 3306): ') ?: '3306';
+
+
 
         try {
             // MySQL'e bağlan
@@ -51,11 +53,15 @@ class SetupDatabaseCommand
             $pdo->exec("CREATE TABLE IF NOT EXISTS `$database`.`transition` (
                 `id` INT NOT NULL AUTO_INCREMENT,
                 `plate_id` INT NOT NULL,
+                `price` DECIMAL(10,2) DEFAULT 0,
                 `transition_date` DATETIME NOT NULL,
                 `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`),
                 FOREIGN KEY (`plate_id`) REFERENCES plate(`id`)
             )");
+
+
+
 
 
 

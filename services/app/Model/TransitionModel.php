@@ -8,7 +8,7 @@ class TransitionModel extends BaseController
     protected $tableName = "transition";
 
     public function createNewTransition($data){
-        $stmt = $this->db->prepare("INSERT INTO $this->tableName (plate_id, transition_date) VALUES (:plate_id, :date)");
+        $stmt = $this->db->prepare("INSERT INTO $this->tableName (plate_id, price, transition_date) VALUES (:plate_id,:price, :date)");
         $stmt->execute($data);
         return $this->db->lastInsertId();
     }
@@ -17,6 +17,13 @@ class TransitionModel extends BaseController
     {
         $stmt = $this->db->prepare("SELECT * FROM $this->tableName WHERE plate_id = ? AND transition_date = ?");
         $stmt->execute([$plateID, $date]);
+        return $stmt->fetchAll();
+    }
+
+    public function carTodayTotal($plateID,$searchData)
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) as total FROM $this->tableName WHERE transition_date between ? and ? AND plate_id = ?");
+        $stmt->execute([$searchData.' 00:00:00', $searchData.' 23:59:59',$plateID]);
         return $stmt->fetchAll();
     }
 }

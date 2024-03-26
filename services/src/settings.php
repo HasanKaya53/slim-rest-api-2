@@ -4,7 +4,7 @@ return [
     'settings' => [
         'db' => [
             'host' => 'localhost',
-            'database' => 'transition',
+            'database' => 'slim_example_2',
             'username' => 'root',
             'password' => 'rootroot',
             'port' => '3306'

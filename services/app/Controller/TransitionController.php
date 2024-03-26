@@ -72,6 +72,11 @@ class TransitionController
             return $response;
         }
 
+        if (strtotime($tarih) > strtotime(date('Y-m-d H:i:s'))) {
+            $response->getBody()->write(json_encode(['status' => false, 'error' => 'Geçiş tarihi bugünden ileri bir tarih olamaz']));
+            return $response;
+        }
+
 
         $plateModel = new PlateModel();
         $transitionModel = new TransitionModel();
@@ -94,39 +99,42 @@ class TransitionController
             return $response;
         }
 
-
-
-
-
-
-
-
         if ($plateID == 0) {
             $response->getBody()->write(json_encode(['status' => false, 'error' => 'Plaka oluşturulamadı']));
             return $response;
         }
 
 
-        $transitionID = $transitionModel->createNewTransition(['plate_id' => $plateID, 'date' => $tarih]);
+        $searchData = date('Y-m-d', strtotime($tarih));
+
+        $total = $transitionModel->carTodayTotal($plateID,$searchData);
+
+
+        $price = 10;
+        if($total[0]['total'] == 1){
+            // %50 indirim
+            $price = $price * 0.5;
+        }else if($total[0]['total'] > 1){
+            // %25 indirim
+            $price = 0;
+        }
+
+
+
+        $transitionID = $transitionModel->createNewTransition(['plate_id' => $plateID,'price' => $price, 'date' => $tarih]);
 
         if ($transitionID == 0) {
             $response->getBody()->write(json_encode(['status' => false, 'error' => 'Geçiş oluşturulamadı']));
             return $response;
         }
 
-
-
-
-
-
-
-
-
-
-
-
+        $response->getBody()->write(json_encode(['status' => true, 'message' => 'Geçiş başarılı', 'price' => $price]));
         return $response;
+    }
 
+
+    public function listTransition()
+    {
 
     }
 
