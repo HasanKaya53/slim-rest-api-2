@@ -41,14 +41,28 @@ class SetupDatabaseCommand
             )");
 
 
+            $pdo->exec("CREATE TABLE IF NOT EXISTS `$database`.`plate` (
+                `id` INT NOT NULL AUTO_INCREMENT,
+                `plate` VARCHAR(255) NOT NULL,
+                `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (`id`)
+            )");
+
+            $pdo->exec("CREATE TABLE IF NOT EXISTS `$database`.`transition` (
+                `id` INT NOT NULL AUTO_INCREMENT,
+                `plate_id` INT NOT NULL,
+                `transition_date` DATETIME NOT NULL,
+                `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (`id`),
+                FOREIGN KEY (`plate_id`) REFERENCES plate(`id`)
+            )");
+
+
+
+
 
             $ana_dizin = realpath(__DIR__ . "/../");
             require_once $ana_dizin.'/Libraries/PasswordClass.php';
-
-
-
-            //insert user ..
-
 
             $stmt = $pdo->prepare("INSERT INTO `$database`.`users` (`username`, `password`) VALUES (:username, :password)");
             $stmt->execute(['username' => 'services_user', 'password' => \App\Libraries\PasswordClass::hash('123456')]);
