@@ -21,8 +21,8 @@ class JWTClass
             'iss' => 'https://hasankaya.info',
             'aud' => 'https://hasankaya.info',
             //'exp' => $iat + 3600, // 1 saat geçerli olacak,
-            //1 dakika geçerli olacak
-            'exp' => $iat + 60,
+            //4 saat geçerli olacak
+            'exp' => $iat + 14400,
             'iat' => $iat
         ];
     }

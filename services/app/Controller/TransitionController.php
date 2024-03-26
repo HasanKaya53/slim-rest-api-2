@@ -57,12 +57,13 @@ class TransitionController
         $data = $request->getParsedBody();
         $data = json_decode(json_encode($data), true);
 
+
         $plaka = $data['plaka'] ?: null;
         $tarih = $data['tarih'] ?: null;
 
 
 
-        if (!$this->isValidLicensePlate($plaka)) {
+        if (!$this->isValidLicensePlate(strtoupper($plaka))) {
             $response->getBody()->write(json_encode(['status' => false, 'error' => 'Geçersiz plaka numarası']));
             return $response;
         }
@@ -76,6 +77,10 @@ class TransitionController
             $response->getBody()->write(json_encode(['status' => false, 'error' => 'Geçiş tarihi bugünden ileri bir tarih olamaz']));
             return $response;
         }
+
+        $tarih = date('Y-m-d H:i:s', strtotime($tarih));
+        $plaka = strtoupper(str_replace(' ', '', $plaka));
+        //upper.
 
 
         $plateModel = new PlateModel();

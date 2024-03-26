@@ -10,7 +10,7 @@ class TransitionModel extends BaseController
 
     public function listAllTransition()
     {
-        $stmt = $this->db->prepare("SELECT plate,price,transition_date FROM $this->tableName INNER JOIN plate ON transition.plate_id = plate.id ORDER BY transition_date DESC");
+        $stmt = $this->db->prepare("SELECT plate,price,transition_date,transition.id FROM $this->tableName INNER JOIN plate ON transition.plate_id = plate.id ORDER  BY transition.id DESC");
         $stmt->execute();
         return $stmt->fetchAll();
 
