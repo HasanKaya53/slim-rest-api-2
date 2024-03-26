@@ -2,12 +2,15 @@
 
 namespace App\Console;
 
+
 use PDO;
+
 
 class SetupDatabaseCommand
 {
     public static function handle()
     {
+
         echo "Veritabanı oluşturulmaya başlanıyor...\n";
 
         // Kullanıcıdan gerekli bilgileri al
@@ -37,16 +40,21 @@ class SetupDatabaseCommand
                 PRIMARY KEY (`id`)
             )");
 
+
+
+            $ana_dizin = realpath(__DIR__ . "/../");
+            require_once $ana_dizin.'/Libraries/PasswordClass.php';
+
+
+
             //insert user ..
-            $password = md5('.?*2ıfmwo3ıumg'.md5('services_user_1').md5(time().time()+19));
 
 
-            $stmt = $pdo->prepare("INSERT INTO `$database`.`users` (`services_user`, `services_user_1`) VALUES (:username, :password)");
+            $stmt = $pdo->prepare("INSERT INTO `$database`.`users` (`username`, `password`) VALUES (:username, :password)");
+            $stmt->execute(['username' => 'services_user', 'password' => \App\Libraries\PasswordClass::hash('123456')]);
 
-
-
-
-
+            $stmt = $pdo->prepare("INSERT INTO `$database`.`users` (`username`, `password`) VALUES (:username, :password)");
+            $stmt->execute(['username' => 'admin', 'password' => \App\Libraries\PasswordClass::hash('123456')]);
 
             echo "Veritabanı '$database' başarıyla oluşturuldu.\n";
 
